@@ -1,0 +1,49 @@
+<div class="main-container">
+  <div class="second-container">
+    <form class="hidden">
+      <input
+        id="form"
+        type="file"
+        name="file"
+        [multiple]="false"
+        accept=".png,.jpg,.gif"
+        (change)="onImageSelected($event.target.files)"
+      />
+    </form>
+    <label class="btn-primary load-button" ngbButtonLabel>
+      Загрузить изображение
+    </label>
+    <ng-container *ngIf="!isFirstTime">
+      <img id="selected" src=""/>
+      <p>
+        <ngb-progressbar
+          *ngIf="isLoading"
+          type="info"
+          [value]="progressValue"
+          [striped]="true"
+          [animated]="true"
+          height="50px"
+        >
+          <b class="progress-bar__text">Запускаю распознавание...</b>
+        </ngb-progressbar>
+      </p>
+      <p>
+        <ngb-alert
+          *ngIf="!isLoading && !isError"
+          [dismissible]="false"
+          type="success"
+        >
+          Я думаю, что на картинке
+          <strong>{{ resultOfClassification | translate }}</strong>
+        </ngb-alert>
+        <ngb-alert
+          *ngIf="!isLoading && isError"
+          [dismissible]="false"
+          type="danger"
+        >
+          Произошла ошибка при распознавании
+        </ngb-alert>
+      </p>
+    </ng-container>
+  </div>
+</div>
